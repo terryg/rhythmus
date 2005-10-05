@@ -38,6 +38,16 @@ class ScansionTest < Test::Unit::TestCase
 
     dictionary.load("test/test.dict")
 
+    f = File.new("test/the_turtle-nash.txt")
     
+    f.each_line do |line|
+      @reader.parse(line)
+    end
+
+    assert( 26 == @reader.words.size )
+
+    @reader.words.each do |w|
+      assert( w.found? )
+    end
   end
 end
