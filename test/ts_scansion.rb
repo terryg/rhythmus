@@ -50,4 +50,30 @@ class ScansionTest < Test::Unit::TestCase
       assert( w.found? )
     end
   end
+
+  def test_lookup_file_and_query
+    dictionary = Dictionary.instance
+
+    dictionary.load("test/test.dict")
+
+    f = File.new("test/the_eel-nash.txt")
+    
+    f.each_line do |line|
+      @reader.parse(line)
+    end
+
+    assert( 12 == @reader.words.size )
+
+    @reader.words.each do |w|
+      if !w.found?
+        dictionary.add("eels", "eels")
+      end
+    end
+
+    @reader.words.each do |w|
+      assert( w.found? )
+    end
+
+  end
+
 end

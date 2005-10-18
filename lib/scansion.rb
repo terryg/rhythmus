@@ -15,7 +15,7 @@ module Scansion
 
     def parse(line)
       cf = CharacterFactory.new
-      line.scan(/\w+/) do |w| 
+      line.scan(/[a-zA-Z']+/) do |w| 
         @words.push(Word.new(w.upcase))
       end
     end
