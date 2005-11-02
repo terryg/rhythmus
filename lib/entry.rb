@@ -12,22 +12,26 @@ MASKSET = {
 
 class Entry
   attr_accessor :next
-  attr_accessor :word
+  attr_accessor :syllables
   attr_accessor :flags
+  attr_accessor :ranks
+  attr_accessor :word
 
-  def initialize(word)
+  def initialize(word, syllables, ranks)
     @next = nil
-    @flags = whatcap(word)
-    @word = word
+#    @flags = whatcap(word)
+    @word = word.upcase
+    @syllables = syllables
+    @ranks = ranks
 
-    if MASKSET::followcase != @flags 
-      @word = @word.upcase
-    end   
+#    if MASKSET:followcase != @flags 
+#      @word = @word.upcase
+#    end   
   end
 
   def whatcap(word)
-    for ii in [0..word.length] do
-      if word[ii, 1] == word[ii, 1].downcase
+    for ii in [0,word.length] do
+      if word[ii,1] == word[ii,1].downcase
         break
       end
     end
@@ -36,16 +40,16 @@ class Entry
       return MASKSET::allcaps
     end
 
-    for jj in [ii..word.length] do
-      if word[jj, 1] == word[jj, 1].upcase
+    for jj in [ii,word.length] do
+      if word[jj,1] == word[jj,1].upcase
         break
       end
     end
 
     if jj == word.length
-      if word[0, 1] == word[0, 1].upcase
-        for kk in [1..word.length]
-          if word[kk, 1] == word[kk, 1].upcase
+      if word[0,1] == word[0,1].upcase
+        for kk in [1,word.length]
+          if word[kk,1] == word[kk,1].upcase
             return MASKSET::followcase
           end
           return MASKSET::capitalized

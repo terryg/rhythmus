@@ -1,3 +1,4 @@
+require 'entry'
 require 'singleton'
 
 class Dictionary
@@ -6,7 +7,7 @@ class Dictionary
   attr_accessor :entries
 
   def initialize
-    @entries = Hash.new
+    @entries = nil
   end
 
   def load(filename)    
@@ -17,11 +18,33 @@ class Dictionary
   end
 
   def find?(word)
-    return (nil == @entries[word.to_s]) ? FALSE : TRUE
+    found = FALSE
+    entry = @entries
+
+    loop do
+      if entry == nil
+        break
+      end
+
+      if entry.word == word.to_s
+        found = TRUE
+        break
+      end
+      
+      entry = entry.next
+    end
+
+    return found
   end
 
-  def add(word, syllables)
-    @entries[word.strip.upcase] = syllables
+  def add(syllables, ranks)
+    word = syllables.sub(/\//, '')
+    if nil == word 
+      word = syllables
+    end
+    entry = Entry.new(word, syllables, ranks)
+    entry.next = @entries
+    @entries = entry
   end
 
 end
