@@ -8,7 +8,7 @@ include Scansion
 class ScansionTest < Test::Unit::TestCase
 
   def setup
-    @reader = Scansion::Reader.new
+    @reader = Scansion::Reader.new   
   end
 
   def test_parse
@@ -76,4 +76,21 @@ class ScansionTest < Test::Unit::TestCase
 
   end
 
+  def test_writeout
+    dictionary = Dictionary.instance
+
+    dictionary.load("test/test.dict")
+
+    ftxt = File.new("test/the_turtle-nash.txt")
+    
+    ftxt.each_line do |line|
+      @reader.parse(line)
+    end
+
+    output = @reader.html
+
+    fhtml = File.new("test/the_turtle-nash.html")
+
+    assert( output == fhtml )
+  end
 end

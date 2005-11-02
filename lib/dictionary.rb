@@ -38,10 +38,7 @@ class Dictionary
   end
 
   def add(syllables, ranks)
-    word = syllables.sub(/\//, '')
-    if nil == word 
-      word = syllables
-    end
+    word = syllables.gsub(/\//, '')
     entry = Entry.new(word, syllables, ranks)
     entry.next = @entries
     @entries = entry

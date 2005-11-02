@@ -19,6 +19,9 @@ module Scansion
         @words.push(Word.new(w.upcase))
       end
     end
+
+    def html
+    end
   end
 
 end
