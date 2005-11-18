@@ -1,14 +1,12 @@
-$:.unshift 'lib'
-require 'scansion'
+$:.unshift("lib")
+require 'reader'
 require 'dictionary'
 require 'test/unit'
 
-include Scansion
-
-class ScansionTest < Test::Unit::TestCase
+class ReaderTest < Test::Unit::TestCase
 
   def setup
-    @reader = Scansion::Reader.new   
+    @reader = Reader.new   
   end
 
   def test_parse
