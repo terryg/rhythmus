@@ -13,8 +13,28 @@ class Dictionary
   def load(filename)    
     IO.foreach(filename) {|x| 
       entry = x.split(/ /)
-      add(entry[0], entry[1])
+      add(entry[0], entry[1].strip)
     }
+  end
+
+  def lookup(word)
+    found = FALSE
+    entry = @entries
+
+    loop do
+      if entry == nil
+        break
+      end
+
+      if entry.word == word.to_s
+        found = TRUE
+        break
+      end
+      
+      entry = entry.next
+    end
+
+    return entry
   end
 
   def find?(word)

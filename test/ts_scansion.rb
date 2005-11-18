@@ -89,8 +89,8 @@ class ScansionTest < Test::Unit::TestCase
 
     output = @reader.html
 
-    fhtml = File.new("test/the_turtle-nash.html")
-
-    assert( output == fhtml )
+    fhtml = IO.readlines("test/the_turtle-nash.html")
+    
+    assert( output.to_s == fhtml.to_s )
   end
 end
