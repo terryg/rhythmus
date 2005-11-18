@@ -64,7 +64,7 @@ class ReaderTest < Test::Unit::TestCase
 
     @reader.words.each do |w|
       if !w.found?
-        dictionary.add("eels", "eels")
+        dictionary.add("eels", "3")
       end
     end
 
@@ -85,7 +85,7 @@ class ReaderTest < Test::Unit::TestCase
       @reader.parse(line)
     end
 
-    output = @reader.html
+    output = @reader.to_html
 
     fhtml = IO.readlines("test/the_turtle-nash.html")
     

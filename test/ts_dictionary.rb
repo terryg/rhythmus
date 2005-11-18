@@ -1,9 +1,7 @@
 $:.unshift 'lib'
-require 'scansion'
+require 'reader'
 require 'dictionary'
 require 'test/unit'
-
-include Scansion
 
 class DictionaryTest < Test::Unit::TestCase
 

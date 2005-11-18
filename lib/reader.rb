@@ -21,7 +21,7 @@ class Reader
     @lines.push(lineObject)
   end
 
-  def html     
+  def to_html     
     dictionary = Dictionary.instance
     output = String.new
     first = TRUE

@@ -64,4 +64,18 @@ class Dictionary
     @entries = entry
   end
 
+  def to_dict(io = $defout)
+    entry = @entries
+
+    loop do
+      if entry == nil
+        break
+      end
+      
+      io << entry.syllables << " " << entry.ranks << "\n"
+      
+      entry = entry.next
+    end
+  end
+
 end
