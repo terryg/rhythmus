@@ -1,0 +1,44 @@
+
+rhythmus.rb README
+
+   Rhythmus Algorithm for Scansion, Copyright (C) 2005 Terry Lorber,
+   tgl@rideside.net and Peter Chipman, pchipman@bu.edu
+
+ABOUT
+
+   Rhythmus is an algorithm which determines the stress patterns in 
+   English poetry.  
+
+   rhythmus.rb parses a plain text file.  It outputs to standard out
+   the provisional rankings for the syllables of each line.  The
+   output is in HTML format.  Rhythmus comes with a dictionary file
+   (rhythmus.dict), this file is consulted to find provisional
+   rankings.  If the file being parsed contains words not in the
+   dictionary, the user is queried to supply the syllables and
+   provisional rankings.  Rhythmus updates the dictionary file after
+   each use with newly acquired entries.  Currently, Rhythmus does not
+   support multiple entries per word.
+
+    Syllables and provisional rankings should be entered in the
+    following format: 'syl/lab/les 123' Use a backslash '/' to delimit
+    syllables, then a space, then a string of the rankings.  There
+    should be one digit per syllable.  Provisional rankings may be [1..3].
+
+INSTALLATION
+
+   rhythmus.rb requires Ruby (http://rubyforge.org/projects/rubyinstaller/).
+
+   After installing Ruby, unzip the Rhythmus package to your home directory.
+
+USAGE
+
+    rhythmus.rb [text-file] [dict-file]
+
+    [text-file] the plain text formatted file containing the poetry to parse
+    [dict-file] the starting dictionary file, additionary words will be added
+
+REVISION HISTORY
+
+   Version 0.1
+
+       Initial release.  Provisinal ranking works.
