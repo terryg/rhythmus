@@ -56,13 +56,18 @@ end
 if $0 == __FILE__
   file1 = ARGV.shift
   file2 = ARGV.shift
+  file3 = ARGV.shift
 
-  rhythmus = Rhythmus.new(file1, file2)
+  if File.exist?(file1) 
+    rhythmus = Rhythmus.new(file1, file2)
 
-  rhythmus.to_html
+    io = File.new(file3, File::CREAT|File::TRUNC|File::RDWR, 0644)
+ 
+    rhythmus.to_html(io)
 
-  io = File.new(file2, File::CREAT|File::TRUNC|File::RDWR, 0644)
+    io = File.new(file2, File::CREAT|File::TRUNC|File::RDWR, 0644)
 
-  dictionary = Dictionary.instance
-  dictionary.to_dict(io)
+    dictionary = Dictionary.instance
+    dictionary.to_dict(io)
+  end
 end

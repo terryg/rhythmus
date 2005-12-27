@@ -11,5 +11,13 @@ class Line
     @words << word
   end
 
+  def wordcount
+    @words.size
+  end
+
+  def syllablecount
+    
+  end
+
 end
 

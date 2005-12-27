@@ -11,6 +11,10 @@ class Dictionary
   end
 
   def load(filename)    
+    if !File.exists?(filename)
+      File.new(filename, File::CREAT|File::TRUNC|File::RDWR, 0644)
+    end
+    
     IO.foreach(filename) {|x| 
       entry = x.split(/ /)
       add(entry[0], entry[1].strip)
