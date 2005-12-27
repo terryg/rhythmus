@@ -32,12 +32,16 @@ INSTALLATION
 
 USAGE
 
-    rhythmus.rb [text-file] [dict-file]
+    rhythmus.rb [text-file] [dict-file] [output-file]
 
     [text-file] the plain text formatted file containing the poetry to parse
     [dict-file] the starting dictionary file, additionary words will be added
 
 REVISION HISTORY
+
+   Version 0,2
+
+       Added meter examples and MSDOS script fixes.
 
    Version 0.1
 
