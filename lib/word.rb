@@ -3,23 +3,15 @@ require 'glyph'
 class Word < Glyph
   attr_accessor :characters
   attr_accessor :syllables
-
+  attr_accessor :stressed
+  
   def initialize(word)
     @characters = Array.new
     word.each do |c|
       @characters << c
     end
     
-    syllables = 0
-
-    dictionary = Dictionary.instance
-    entry = dictionary.lookup(@characters)
-    if nil != entry
-      syl = entry.syllables.split(/\//)
-      syl.each do |s|
-        syllables += 1
-      end
-    end
+    @syllables = Array.new
   end
 
   def append(character)

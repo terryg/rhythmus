@@ -1,16 +1,19 @@
 $:.unshift("lib")
 require 'reader'
 require 'dictionary'
+require 'provisional_rank'
+require 'provisional_stress'
+require 'html_decorator'
 require 'test/unit'
 
 class ReaderTest < Test::Unit::TestCase
 
   def setup
-    @reader = Reader.new   
+    @reader = Reader.new
   end
 
-  def test_parse
-    @reader.parse( "Able was I ere I saw Elba." )
+  def test_addline
+    @reader.addline( "Able was I ere I saw Elba." )
     assert( 7 == @reader.words.size )
   end
 
@@ -19,7 +22,7 @@ class ReaderTest < Test::Unit::TestCase
 
     dictionary.load("test/test.dict")
 
-    @reader.parse( "Able was I ere I saw Elba." )
+    @reader.addline( "Able was I ere I saw Elba." )
     assert( 7 == @reader.words.size )
 
     assert( @reader.words[0].found? )
@@ -37,10 +40,10 @@ class ReaderTest < Test::Unit::TestCase
     dictionary.load("test/test.dict")
 
     f = File.new("test/the_turtle-nash.txt")
-    
-    f.each_line do |line|
-      @reader.parse(line)
-    end
+   
+    @reader.file = f
+
+    @reader.parse
 
     assert( 26 == @reader.words.size )
 
@@ -56,9 +59,8 @@ class ReaderTest < Test::Unit::TestCase
 
     f = File.new("test/the_eel-nash.txt")
     
-    f.each_line do |line|
-      @reader.parse(line)
-    end
+    @reader.file = f
+    @reader.parse
 
     assert( 12 == @reader.words.size )
 
@@ -80,12 +82,15 @@ class ReaderTest < Test::Unit::TestCase
     dictionary.load("test/test.dict")
 
     ftxt = File.new("test/the_turtle-nash.txt")
-    
-    ftxt.each_line do |line|
-      @reader.parse(line)
-    end
 
-    output = @reader.to_html
+    @reader.file = ftxt
+
+    @reader = Reader.new( File.new("test/the_turtle-nash.txt") )
+    @reader = ProvisionalRank.new(@reader)
+    @reader = ProvisionalStress.new(@reader)
+    @reader = HtmlDecorator.new(@reader)
+    
+    output = @reader.parse
 
     fhtml = IO.readlines("test/the_turtle-nash.html")
     

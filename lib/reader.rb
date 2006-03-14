@@ -1,24 +1,36 @@
 require 'line'
 require 'word'
+require 'parse_step'
 
-class Reader
+class Reader < ParseStep
   attr_accessor :words
   attr_accessor :lines
-
-  def initialize
+  attr_accessor :file
+  
+  def initialize(file = nil)
     @words = Array.new
     @lines = Array.new
+    @file = file
   end
 
-  def parse(line)
+  def addline(line)
     lineObject = Line.new
     line.scan(/[a-zA-Z']+/) do |w| 
       word = Word.new(w.upcase)
       @words.push(word)
       lineObject.append(word)
     end
-
-    @lines.push(lineObject)
+    @lines.push(lineObject) 
+  end
+  
+  def parse()
+    if nil != file 
+      file.each_line do |line|
+        addline(line)
+      end
+    end
+    
+    return @lines
   end
 
   def to_html     
