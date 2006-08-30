@@ -4,6 +4,11 @@ $:.unshift('lib')
 
 require 'dictionary'
 require 'reader'
+require 'provisional_rank'
+require 'provisional_stress'
+require 'demote_stress'
+require 'promote_stress'
+require 'html_decorator'
 
 class Rhythmus
   attr_accessor :txtfile
@@ -35,22 +40,17 @@ class Rhythmus
 
     ftxt = File.new(@txtfile)
     
-    ftxt.each_line do |line|
-      @reader.parse(line)
-    end
+    @reader.file = ftxt
 
-    @reader.words.each do |word|
-      if !dictionary.find?(word.characters)
-        answer = ask_user(word.characters)
-        if nil != answer
-          dictionary.add(answer[0], answer[1])
-        end
-      end
-    end
-
-    io << @reader.to_html
+    @reader = Reader.new( File.new(@txtfile) )
+    @reader = ProvisionalRank.new(@reader)
+    @reader = ProvisionalStress.new(@reader)
+    @reader = DemoteStress.new(@reader)
+    @reader = PromoteStress.new(@reader)
+    @reader = HtmlDecorator.new(@reader)
+    
+    io << @reader.parse
   end
-
 end
 
 if $0 == __FILE__
