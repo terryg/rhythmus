@@ -1,8 +1,9 @@
 
 rhythmus.rb README
 
-   Rhythmus Algorithm for Scansion, Copyright (C) 2005 Terry Lorber,
-   tgl@rideside.net and Peter Chipman, pchipman@gmail.com
+   Rhythmus Algorithm for Scansion, Copyright (C) 2005-2006
+   Terry Lorber, tgl@rideside.net and Peter Chipman, 
+   pchipman@gmail.com
 
 ABOUT
 
@@ -19,10 +20,10 @@ ABOUT
    each use with newly acquired entries.  Currently, Rhythmus does not
    support multiple entries per word.
 
-    Syllables and provisional rankings should be entered in the
-    following format: 'syl/lab/les 123' Use a backslash '/' to delimit
-    syllables, then a space, then a string of the rankings.  There
-    should be one digit per syllable.  Provisional rankings may be [1..3].
+   Syllables and provisional rankings should be entered in the
+   following format: 'syl/lab/les 123' Use a backslash '/' to delimit
+   syllables, then a space, then a string of the rankings.  There
+   should be one digit per syllable.  Provisional rankings may be [1..3].
 
 INSTALLATION
 
@@ -39,7 +40,7 @@ USAGE
 
 REVISION HISTORY
 
-   Version 0,2
+   Version 0.2
 
        Added meter examples and MSDOS script fixes.
 
