@@ -3,6 +3,9 @@ require 'reader'
 require 'dictionary'
 require 'provisional_rank'
 require 'provisional_stress'
+require 'demote_stress'
+require 'promote_stress'
+require 'guess_meter'
 require 'html_decorator'
 require 'test/unit'
 
@@ -88,11 +91,16 @@ class ReaderTest < Test::Unit::TestCase
     @reader = Reader.new( File.new("test/the_turtle-nash.txt") )
     @reader = ProvisionalRank.new(@reader)
     @reader = ProvisionalStress.new(@reader)
+    @reader = DemoteStress.new(@reader)
+    @reader = PromoteStress.new(@reader)
+    @reader = GuessMeter.new(@reader)
     @reader = HtmlDecorator.new(@reader)
     
     output = @reader.parse
 
     fhtml = IO.readlines("test/the_turtle-nash.html")
+    
+    print output.to_s
     
     assert( output.to_s == fhtml.to_s )
   end

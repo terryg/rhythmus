@@ -18,6 +18,10 @@ class Word < Glyph
     @characters << character
   end
 
+  def to_s
+    return @characters.to_s
+  end
+  
   def found?
     dictionary = Dictionary.instance
     return dictionary.find?(@characters)

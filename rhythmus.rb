@@ -8,6 +8,7 @@ require 'provisional_rank'
 require 'provisional_stress'
 require 'demote_stress'
 require 'promote_stress'
+require 'guess_meter'
 require 'html_decorator'
 
 class Rhythmus
@@ -47,7 +48,9 @@ class Rhythmus
     @reader = ProvisionalStress.new(@reader)
     @reader = DemoteStress.new(@reader)
     @reader = PromoteStress.new(@reader)
+    @reader = GuessMeter.new(@reader)
     @reader = HtmlDecorator.new(@reader)
+
     
     io << @reader.parse
   end

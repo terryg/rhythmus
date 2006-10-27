@@ -14,7 +14,7 @@ class GuessMeterTest < Test::Unit::TestCase
     @reader = Reader.new
   end
 
-  def test_demote
+  def test_guess_meter
     dictionary = Dictionary.instance
 
     dictionary.load("test/test.dict")
@@ -31,22 +31,15 @@ class GuessMeterTest < Test::Unit::TestCase
 
     lines = @reader.parse
     
-    lines.each do |line|
-      line.words.each do |word|
-        print word.characters
-        print "\n"       
-      end
-    end
-    
     assert(lines.size == 2)
     
-    assert(lines[1].words[0].characters == "**TALLY**")
-    assert(lines[1].words[1].characters == "5")
-    assert(lines[1].words[2].characters == "crests")
-    assert(lines[1].words[3].characters == "10")
-    assert(lines[1].words[4].characters == "syllables")
-    assert(lines[1].words[5].characters == "0.5")
-    assert(lines[1].words[6].characters == "duple")
+    assert(lines[1].words[0].to_s == "TALLY")
+    assert(lines[1].words[1].to_s == "5")
+    assert(lines[1].words[2].to_s == "crests")
+    assert(lines[1].words[3].to_s == "10")
+    assert(lines[1].words[4].to_s == "syllables")
+    assert(lines[1].words[5].to_s == "0.50")
+    assert(lines[1].words[6].to_s == "duple")
   end
 
 end

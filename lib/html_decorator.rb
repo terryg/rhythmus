@@ -12,7 +12,9 @@ class HtmlDecorator < ParseStepDecorator
     
     output = String.new
     first = true
-    
+      
+    lastline = lines.pop
+      
     lines.each do |line|
       rrow = String.new
       wrow = String.new
@@ -35,13 +37,12 @@ class HtmlDecorator < ParseStepDecorator
           scount += 1
         end
       end
-      
+
       if first 
         first = false
       else
         output << "<p>\n"
       end
-
 
       rrow << "<td><b>r/s: " << ("%.2f" % (rtotal / scount)) << "</b></td>\n"
       wrow << "<td></td>\n"
@@ -54,9 +55,22 @@ class HtmlDecorator < ParseStepDecorator
       output << wrow
       output << "</tr>\n"
       output << "</table>\n"
-
+   
     end
     
+    lastrow = String.new
+    
+    lastline.words.each do |w|
+      lastrow<< w.characters.to_s
+      lastrow<< " "
+    end
+    
+    output << "<p><table>\n"
+    output << "<tr align=center><th>\n"
+    output << lastrow
+    output << "</th></tr>\n"
+    output << "</p></table>\n"
+   
     return output
   end
 end

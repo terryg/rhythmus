@@ -36,12 +36,12 @@ class GuessMeter < ParseStepDecorator
     end
     
     tally = Line.new
-    tally.append(Word.new("**TALLY**"))
+    tally.append(Word.new("TALLY"))
     tally.append(Word.new(crests.to_s))
     tally.append(Word.new("crests"))
     tally.append(Word.new(syllables.to_s))
     tally.append(Word.new("syllables"))
-    tally.append(Word.new(ratio.to_s))
+    tally.append(Word.new(("%.2f" % ratio)))
     tally.append(Word.new(guess))
 
     lines<< tally
