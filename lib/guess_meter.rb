@@ -13,7 +13,9 @@ class GuessMeter < ParseStepDecorator
     
     crests = 0
     syllables = 0
-    lines.each do |line|
+    syllablesAverage = 0
+    
+    lines.each do |line| 
       line.words.each do |word|
         last = false
         word.syllables.each do |syl|
@@ -34,16 +36,26 @@ class GuessMeter < ParseStepDecorator
     if ratio > 0.40
       guess = "duple"
     end
+
+    avg = syllables.to_f/lines.size.to_f
+    proper = avg
+     
+    if "duple" == guess 
+      proper = (proper.to_f / 2.to_f).round
+    else 
+      proper = (proper.to_f / 3.to_f ).round   
+    end    
     
     tally = Line.new
     tally.append(Word.new("TALLY"))
-    tally.append(Word.new(crests.to_s))
-    tally.append(Word.new("crests"))
-    tally.append(Word.new(syllables.to_s))
-    tally.append(Word.new("syllables"))
+    tally.append(Word.new("c/s:"))
     tally.append(Word.new(("%.2f" % ratio)))
-    tally.append(Word.new(guess))
-
+    tally.append(Word.new("[" + guess + "]"))
+    tally.append(Word.new("s/l:"))
+    tally.append(Word.new(("%.2f" % avg)))
+    tally.append(Word.new("proper metrical stress:"))
+    tally.append(Word.new(proper.to_s))
+    
     lines<< tally
     
     return lines

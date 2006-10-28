@@ -16,8 +16,12 @@ class Line
   end
 
   def syllablecount
-    
+    syllables = 0
+    @words.each do |word|
+      syllables = syllables + word.syllables.count
+    end
+    return syllables
   end
-
+  
 end
 
