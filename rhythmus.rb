@@ -50,8 +50,7 @@ class Rhythmus
     @reader = PromoteStress.new(@reader)
     @reader = GuessMeter.new(@reader)
     @reader = HtmlDecorator.new(@reader)
-
-    
+   
     io << @reader.parse
   end
 end
