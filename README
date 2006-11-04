@@ -40,6 +40,13 @@ USAGE
 
 REVISION HISTORY
 
+   Version 0.3
+ 
+     Ticket #2 demote provisional stresses
+     Ticket #3 promote stressed syllables
+     Ticket #4 determine duple or triple meter
+     Ticket #5 determine stresses per line
+
    Version 0.2
 
        Added meter examples and MSDOS script fixes.
