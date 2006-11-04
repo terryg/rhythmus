@@ -100,8 +100,6 @@ class ReaderTest < Test::Unit::TestCase
 
     fhtml = IO.readlines("test/the_turtle-nash.html")
     
-    print output.to_s
-    
     assert( output.to_s == fhtml.to_s )
   end
 end
