@@ -12,9 +12,12 @@ class ProvisionalRank < ParseStepDecorator
   def parse()
     lines = @parse_step.parse
 
+    t = Timer.new
+    print "ProvisionalRank.parse\n"
+    
     dictionary = Dictionary.instance
     
-    lines.each do |line|
+    lines.each do |line|  
       line.words.each do |word|
         entry = dictionary.lookup(word.characters)
         if nil != entry
@@ -28,7 +31,9 @@ class ProvisionalRank < ParseStepDecorator
         end
       end     
     end
-
+    
+    print "\t" + t.elapsed + "\n\n"
+    
     return lines
   end
   

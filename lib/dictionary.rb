@@ -1,85 +1,54 @@
 require 'entry'
 require 'singleton'
+require 'timer'
+require 'tree'
 
 class Dictionary
   include Singleton
 
-  attr_accessor :entries
-
+  attr_accessor :tree
+  
   def initialize
-    @entries = nil
+    @tree = Tree.new
   end
 
   def load(filename)    
+    t = Timer.new
+    
+    printf "Dictionary.load\n"
+    
     if !File.exists?(filename)
       File.new(filename, File::CREAT|File::TRUNC|File::RDWR, 0644)
     end
-    
+
+    print "\tfile read: " + t.elapsed + "\n"
+            
     IO.foreach(filename) {|x| 
       entry = x.split(/ /)
       add(entry[0], entry[1].strip)
     }
+    
+    print "\tadded entries: " + t.elapsed + "\n\n"
+    
   end
 
   def lookup(word)
-    found = FALSE
-    entry = @entries
-
-    loop do
-      if entry == nil
-        break
-      end
-
-      if entry.word == word.to_s
-        found = TRUE
-        break
-      end
-      
-      entry = entry.next
-    end
-
-    return entry
+    return @tree.retrieve(word.to_s.upcase)
   end
 
   def find?(word)
-    found = FALSE
-    entry = @entries
-
-    loop do
-      if entry == nil
-        break
-      end
-
-      if entry.word == word.to_s
-        found = TRUE
-        break
-      end
-      
-      entry = entry.next
-    end
-
-    return found
+     return (not @tree.retrieve(word.to_s.upcase).nil?)
   end
 
   def add(syllables, ranks)
     word = syllables.gsub(/\//, '')
     entry = Entry.new(word, syllables, ranks)
-    entry.next = @entries
-    @entries = entry
+ 
+    @tree.insert(entry)    
   end
 
   def to_dict(io = $defout)
-    entry = @entries
-
-    loop do
-      if entry == nil
-        break
-      end
-      
-      io << entry.syllables << " " << entry.ranks << "\n"
-      
-      entry = entry.next
-    end
+    @tree.to_dict(io)
   end
-
+  
 end

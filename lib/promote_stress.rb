@@ -10,7 +10,10 @@ class PromoteStress < ParseStepDecorator
   
   def parse()
     lines = @parse_step.parse
-    
+ 
+    t = Timer.new
+    print "PromoteStress.parse\n"
+        
     lines.each do |line|
       syls = Array.new
       
@@ -37,7 +40,9 @@ class PromoteStress < ParseStepDecorator
         end
       end
     end
-   
+ 
+    print "\t" + t.elapsed + "\n\n"
+       
     return lines
   end 
   

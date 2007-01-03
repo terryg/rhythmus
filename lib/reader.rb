@@ -24,11 +24,16 @@ class Reader < ParseStep
   end
   
   def parse()
+    t = Timer.new
+    printf "Reader.parse\n"
+    
     if nil != file 
       file.each_line do |line|
         addline(line)
       end
     end
+    
+    printf "\t" + t.elapsed + "\n\n"
     
     return @lines
   end

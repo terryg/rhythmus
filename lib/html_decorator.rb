@@ -9,7 +9,10 @@ class HtmlDecorator < ParseStepDecorator
   
   def parse()
     lines = parse_step.parse()
-    
+
+    t = Timer.new
+    print "HtmlDecorator.parse\n"
+        
     output = String.new
     first = true
       
@@ -70,6 +73,9 @@ class HtmlDecorator < ParseStepDecorator
     output << lastrow
     output << "</th></tr>\n"
     output << "</p></table>\n"
+        
+    print "\t" + t.elapsed + "\n\n"
+    
    
     return output
   end

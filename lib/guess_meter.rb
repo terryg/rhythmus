@@ -10,7 +10,10 @@ class GuessMeter < ParseStepDecorator
   
   def parse()
     lines = @parse_step.parse
-    
+
+    t = Timer.new
+    print "GuessMeter.parse\n"
+        
     crests = 0
     syllables = 0
     syllablesAverage = 0
@@ -57,7 +60,9 @@ class GuessMeter < ParseStepDecorator
     tally.append(Word.new(proper.to_s))
     
     lines<< tally
-    
+
+    print "\t" + t.elapsed + "\n\n"
+        
     return lines
   end 
   

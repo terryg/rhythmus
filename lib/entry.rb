@@ -11,7 +11,6 @@ MASKSET = {
 }.freeze
 
 class Entry
-  attr_accessor :next
   attr_accessor :syllables
   attr_accessor :flags
   attr_accessor :ranks

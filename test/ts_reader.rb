@@ -27,7 +27,7 @@ class ReaderTest < Test::Unit::TestCase
 
     @reader.addline( "Able was I ere I saw Elba." )
     assert( 7 == @reader.words.size )
-
+    
     assert( @reader.words[0].found? )
     assert( @reader.words[1].found? )
     assert( @reader.words[2].found? )
@@ -81,9 +81,9 @@ class ReaderTest < Test::Unit::TestCase
 
   def test_writeout
     dictionary = Dictionary.instance
-
+    
     dictionary.load("test/test.dict")
-
+    
     ftxt = File.new("test/the_turtle-nash.txt")
 
     @reader.file = ftxt

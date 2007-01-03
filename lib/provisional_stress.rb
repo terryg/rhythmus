@@ -1,5 +1,4 @@
 require 'parse_step_decorator'
-require 'dictionary'
 
 class ProvisionalStress < ParseStepDecorator
   attr_accessor :parse_step
@@ -10,9 +9,10 @@ class ProvisionalStress < ParseStepDecorator
   
   def parse()
     lines = @parse_step.parse
-    
-    dictionary = Dictionary.instance
-    
+
+    t = Timer.new   
+    print "ProvisionalStress.parse\n"
+     
     lines.each do |line|
       line.words.each do |word|
         word.syllables.each do |s|
@@ -24,6 +24,8 @@ class ProvisionalStress < ParseStepDecorator
         end
       end     
     end
+    
+    print "\t" + t.elapsed + "\n\n"
     
     return lines
   end
