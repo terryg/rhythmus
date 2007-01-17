@@ -12,7 +12,7 @@ class GuessMeter < ParseStepDecorator
     lines = @parse_step.parse
 
     t = Timer.new
-    print "GuessMeter.parse\n"
+    log "GuessMeter.parse\n"
         
     crests = 0
     syllables = 0
@@ -61,8 +61,8 @@ class GuessMeter < ParseStepDecorator
     
     lines<< tally
 
-    print "\t" + t.elapsed + "\n\n"
-        
+    log "\t" + t.elapsed + "\n\n"
+   
     return lines
   end 
   

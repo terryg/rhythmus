@@ -13,7 +13,7 @@ class ProvisionalRank < ParseStepDecorator
     lines = @parse_step.parse
 
     t = Timer.new
-    print "ProvisionalRank.parse\n"
+    log "ProvisionalRank.parse\n"
     
     dictionary = Dictionary.instance
     
@@ -32,8 +32,8 @@ class ProvisionalRank < ParseStepDecorator
       end     
     end
     
-    print "\t" + t.elapsed + "\n\n"
-    
+    log "\t" + t.elapsed + "\n\n"
+        
     return lines
   end
   

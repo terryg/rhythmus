@@ -11,7 +11,7 @@ class ProvisionalStress < ParseStepDecorator
     lines = @parse_step.parse
 
     t = Timer.new   
-    print "ProvisionalStress.parse\n"
+    log "ProvisionalStress.parse\n"
      
     lines.each do |line|
       line.words.each do |word|
@@ -25,7 +25,7 @@ class ProvisionalStress < ParseStepDecorator
       end     
     end
     
-    print "\t" + t.elapsed + "\n\n"
+    log "\t" + t.elapsed + "\n\n"
     
     return lines
   end

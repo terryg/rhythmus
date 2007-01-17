@@ -23,5 +23,15 @@ class Line
     return syllables
   end
   
+  def to_s
+    str = ""
+    
+    @words.each do |word|
+      str << word.characters.to_s << " "
+    end
+    
+    return str
+  end
+  
 end
 

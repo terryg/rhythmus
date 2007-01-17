@@ -11,7 +11,7 @@ class HtmlDecorator < ParseStepDecorator
     lines = parse_step.parse()
 
     t = Timer.new
-    print "HtmlDecorator.parse\n"
+    log "HtmlDecorator.parse\n"
         
     output = String.new
     first = true
@@ -26,7 +26,10 @@ class HtmlDecorator < ParseStepDecorator
       rtotal = 0
       
       line.words.each do |word|
+        log word.to_s + "\t"
+        
         word.syllables.each do |s|
+          log s.unit + " "
           rrow << "  <td>" << s.rank.to_s << "</td>\n"
           rtotal += s.rank
           wrow << "  <td>" 
@@ -39,6 +42,8 @@ class HtmlDecorator < ParseStepDecorator
           
           scount += 1
         end
+        
+        log "\t"
       end
 
       if first 
@@ -59,6 +64,7 @@ class HtmlDecorator < ParseStepDecorator
       output << "</tr>\n"
       output << "</table>\n"
    
+      log "\n"
     end
     
     lastrow = String.new
@@ -74,9 +80,8 @@ class HtmlDecorator < ParseStepDecorator
     output << "</th></tr>\n"
     output << "</p></table>\n"
         
-    print "\t" + t.elapsed + "\n\n"
-    
-   
+    log "\t" + t.elapsed + "\n\n"
+
     return output
   end
 end
