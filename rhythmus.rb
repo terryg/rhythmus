@@ -10,6 +10,7 @@ require 'demote_stress'
 require 'promote_stress'
 require 'guess_meter'
 require 'html_decorator'
+require 'timer'
 
 class Rhythmus
   attr_accessor :txtfile
@@ -22,18 +23,6 @@ class Rhythmus
     @txtfile = txt
 
     @reader = Reader.new
-  end
-
-  def ask_user(word)
-    print "\nEnter dictionary listing for #{word} [syl/lab/les 123]: "
-    response = $stdin.gets.chomp
-    entry = response.split(/ /)
-    
-    if 2 == entry.size
-      return entry
-    else 
-      return nil
-    end
   end
 
   def to_html(io = $defout)
@@ -60,6 +49,8 @@ if $0 == __FILE__
   file2 = ARGV.shift
   file3 = ARGV.shift
 
+  t = Timer.new
+  
   if File.exist?(file1) 
     rhythmus = Rhythmus.new(file1, file2)
 
@@ -72,4 +63,7 @@ if $0 == __FILE__
     dictionary = Dictionary.instance
     dictionary.to_dict(io)
   end
+  
+  printf "Total time: " + t.elapsed + "\n"
+  
 end
