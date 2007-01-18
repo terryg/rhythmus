@@ -12,28 +12,33 @@ class Reader < ParseStep
     @lines = Array.new
     @file = file
   end
-
-  def addline(line)
-    lineObject = Line.new
-    line.scan(/[a-zA-Z']+/) do |w| 
-      word = Word.new(w.upcase)
-      @words.push(word)
-      lineObject.append(word)
-    end
-    @lines.push(lineObject) 
-  end
   
   def parse()
     t = Timer.new
-    printf "Reader.parse\n"
+    log "Reader.parse\n"
     
     if nil != file 
       file.each_line do |line|
-        addline(line)
+        add_line(line)
       end
     end
+
+    log "\t\tadd lines:" + t.elapsed + "\n\n"
+
+    dictionary = Dictionary.instance
     
-    printf "\t" + t.elapsed + "\n\n"
+    @words.each do |word|
+      if !dictionary.find?(word.characters)
+        answer = ask_user(word.characters)
+        if nil != answer
+          dictionary.add(answer[0], answer[1])
+        end
+      end
+    end    
+
+    log "\t\task users:" + t.elapsed + "\n\n"
+    
+    log "\tTotal:" + t.elapsed + "\n\n"
     
     return @lines
   end
@@ -99,5 +104,30 @@ class Reader < ParseStep
     
     return output
   end
+
+  private
+  
+  def add_line(line)
+    lineObject = Line.new
+    line.scan(/[a-zA-Z']+/) do |w| 
+      word = Word.new(w.upcase)
+      @words.push(word)
+      lineObject.append(word)
+    end
+    @lines.push(lineObject) 
+  end
+
+  def ask_user(word)
+    print "\nEnter dictionary listing for #{word} [syl/lab/les 123]: "
+    response = $stdin.gets.chomp
+    entry = response.split(/ /)
+    
+    if 2 == entry.size
+      return entry
+    else 
+      return nil
+    end
+  end
+  
 end
 
