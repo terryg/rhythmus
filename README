@@ -40,6 +40,13 @@ USAGE
 
 REVISION HISTORY
 
+   Version 0.4
+
+     Changed dictionary format for faster lookup.
+     Output elapsed time to process.
+
+     Ticket #13 fixed query for unknown words
+
    Version 0.3
  
      Ticket #2 demote provisional stresses
