@@ -48,9 +48,14 @@ class HtmlDecorator < ParseStepDecorator
         output << "<p>\n"
       end
 
-      rrow << "<td><b>r/s: " << ("%.2f" % (rtotal / scount)) << "</b></td>\n"
-      wrow << "<td></td>\n"
-
+      if 0 == rtotal
+        rrow << "<td>&nbsp;</td>\n"
+        wrow << "<td></td>\n"
+      else 
+        rrow << "<td><b>r/s: " << ("%.2f" % (rtotal / scount)) << "</b></td>\n"
+        wrow << "<td></td>\n"
+      end
+      
       output << "<table>\n"
       output << "<tr align=center>\n"
       output << rrow

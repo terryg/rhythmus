@@ -18,7 +18,13 @@ class GuessMeter < ParseStepDecorator
     syllables = 0
     syllablesAverage = 0
     
+    lcount = 0
+    
     lines.each do |line| 
+      if 0 < line.words.size
+        lcount += 1
+      end
+      
       line.words.each do |word|
         last = false
         word.syllables.each do |syl|
@@ -40,7 +46,7 @@ class GuessMeter < ParseStepDecorator
       guess = "duple"
     end
 
-    avg = syllables.to_f/lines.size.to_f
+    avg = syllables.to_f/lcount.to_f
     proper = avg
      
     if "duple" == guess 
