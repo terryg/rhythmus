@@ -20,7 +20,7 @@ IF NOT EXIST %INPUT% (
   ECHO Could not find file: %INPUT%
   GOTO :Usage
 ) ELSE ( 
-  ruby rhythmus.rb %INPUT% %DICT% %OUTPUT%
+  ruby rhythmus.rb -d %DICT% -o %OUTPUT% %INPUT%
 )
 
 SET /P FINI=[enter] 

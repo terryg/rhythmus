@@ -12,58 +12,90 @@ require 'guess_meter'
 require 'html_decorator'
 require 'timer'
 
+require 'optparse'
+require 'ostruct'
+
 class Rhythmus
-  attr_accessor :txtfile
-  attr_accessor :reader
+  VERSION = '0.5'
 
-  def initialize(txt, dict)
-    dictionary = Dictionary.instance
-    dictionary.load(dict)
-
-    @txtfile = txt
-
-    @reader = Reader.new
-  end
-
-  def to_html(io = $defout)
-    dictionary = Dictionary.instance
-
-    ftxt = File.new(@txtfile)
-    
-    @reader.file = ftxt
-
-    @reader = Reader.new( File.new(@txtfile) )
-    @reader = ProvisionalRank.new(@reader)
-    @reader = ProvisionalStress.new(@reader)
-    @reader = DemoteStress.new(@reader)
-    @reader = PromoteStress.new(@reader)
-    @reader = GuessMeter.new(@reader)
-    @reader = HtmlDecorator.new(@reader)
-   
-    io << @reader.parse
-  end
-end
-
-if $0 == __FILE__
-  file1 = ARGV.shift
-  file2 = ARGV.shift
-  file3 = ARGV.shift
-
-  t = Timer.new
+  attr_reader :options
   
-  if File.exist?(file1) 
-    rhythmus = Rhythmus.new(file1, file2)
+  def initialize(argv, stdin)
+    @arguments = argv
+    @stdin = stdin
+  
+    @options = OpenStruct.new
+    @options.infile = nil
+    @options.outfile = "output.html"
+    @options.dictionary = "rhythmus.dict"
+  end
 
-    io = File.new(file3, File::CREAT|File::TRUNC|File::RDWR, 0644)
+  def run
+    if parsed_options? and arguments_valid?
+      dictionary = Dictionary.instance
+      dictionary.load(@options.dictionary)
+  
+      io = File.new(@options.outfile, File::CREAT|File::TRUNC|File::RDWR, 0644)
  
-    rhythmus.to_html(io)
+      to_html(io)
 
-    io = File.new(file2, File::CREAT|File::TRUNC|File::RDWR, 0644)
+      io = File.new(@options.dictionary, File::CREAT|File::TRUNC|File::RDWR, 0644)
 
-    dictionary = Dictionary.instance
-    dictionary.to_dict(io)
+      dictionary = Dictionary.instance
+      dictionary.to_dict(io)
+    else
+      puts 'Usage: rhytmus.rb [options] file-to-parse'
+      puts '         -d FILE, --dictionary FILE    the rhythmus dictionary to use for' 
+      puts '                                       syllable information'
+      puts '                                       default: rhythmus.rb'
+      puts '         -o FILE, --outfile FILE       the output file to generate with '
+      puts '                                       the scanned poem'
+      puts '                                       default: output.html'
+    end
   end
   
-  printf "Total time: " + t.elapsed + "\n"
+  protected
   
+  def parsed_options?    
+    opts = OptionParser.new do |opts|
+      opts.on("-d", "--dictionary [DICT]", String, "The dictionary file to use for parsing.") do |dict|
+        @options.dictionary = dict
+      end
+    
+      opts.on("-o", "--outfile [OUT]", String, "The output HTML file to record the results.") do |outfile|
+        @options.outfile = outfile
+      end
+    end
+    
+    @options.infile = @arguments.last
+
+    opts.parse!(@arguments)
+  end
+  
+  def arguments_valid?
+    if File.exists?(@options.infile) and File.exists?(@options.dictionary)
+      true
+    else
+      false
+    end
+  end
+  
+  def to_html(io = $defout)
+    ftxt = File.new(@options.infile)
+    
+    reader = Reader.new( ftxt )
+    reader = ProvisionalRank.new(reader)
+    reader = ProvisionalStress.new(reader)
+    reader = DemoteStress.new(reader)
+    reader = PromoteStress.new(reader)
+    reader = GuessMeter.new(reader)
+    reader = HtmlDecorator.new(reader)
+   
+    io << reader.parse
+  end
 end
+
+# Create and run the application
+app = Rhythmus.new(ARGV, STDIN)
+app.run
+
