@@ -73,10 +73,14 @@ class Rhythmus
   end
   
   def arguments_valid?
-    if File.exists?(@options.infile) and File.exists?(@options.dictionary)
-      true
-    else
+    if @options.infile.nil?
       false
+    else
+      if File.exists?(@options.infile) and File.exists?(@options.dictionary)
+        true
+      else
+        false
+      end
     end
   end
   
